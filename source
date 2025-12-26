@@ -76,7 +76,7 @@ Juned["_Icon"].Position = UDim2.new(0, 5, 0, 0)
 Juned["_Icon"].Size = UDim2.new(0, 25, 1, 0)
 Juned["_Icon"].Name = "Icon"
 Juned["_Icon"].Parent = Juned["_Frame"]
-Juned["_Label"].Font = Enum.Font.Sarpanch
+Juned["_Label"].Font = Enum.Font.RobotoCondensed
 Juned["_Label"].Text = "JuneVideo"
 Juned["_Label"].TextColor3 = Color3.fromRGB(201.00001841783524, 196.00001871585846, 174.00000482797623)
 Juned["_Label"].TextSize = 14
@@ -142,7 +142,7 @@ Juned["_SAP"].BorderMode = Enum.BorderMode.Inset
 Juned["_SAP"].Size = UDim2.new(1, -10, 0, 50)
 Juned["_SAP"].Name = "SAP"
 Juned["_SAP"].Parent = Juned["_ScrollingFrame"]
-Juned["_Title"].Font = Enum.Font.Sarpanch
+Juned["_Title"].Font = Enum.Font.RobotoCondensed
 Juned["_Title"].Text = "Show All Players"
 Juned["_Title"].TextColor3 = Color3.fromRGB(255, 255, 255)
 Juned["_Title"].TextSize = 14
@@ -160,7 +160,7 @@ Juned["_Title"].Parent = Juned["_SAP"]
 Juned["_UIPadding"].PaddingLeft = UDim.new(0, 5)
 Juned["_UIPadding"].PaddingRight = UDim.new(0, 5)
 Juned["_UIPadding"].Parent = Juned["_Title"]
-Juned["_Desc"].Font = Enum.Font.Sarpanch
+Juned["_Desc"].Font = Enum.Font.RobotoCondensed
 Juned["_Desc"].LineHeight = 3
 Juned["_Desc"].Text = "Shows all players and their statuses"
 Juned["_Desc"].TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -193,7 +193,7 @@ Juned["_DH"].BorderMode = Enum.BorderMode.Inset
 Juned["_DH"].Size = UDim2.new(1, -10, 0, 50)
 Juned["_DH"].Name = "DH"
 Juned["_DH"].Parent = Juned["_ScrollingFrame"]
-Juned["_Title1"].Font = Enum.Font.Sarpanch
+Juned["_Title1"].Font = Enum.Font.RobotoCondensed
 Juned["_Title1"].Text = "Distance Highlighter"
 Juned["_Title1"].TextColor3 = Color3.fromRGB(255, 255, 255)
 Juned["_Title1"].TextSize = 14
@@ -210,7 +210,7 @@ Juned["_Title1"].Parent = Juned["_DH"]
 Juned["_UIPadding3"].PaddingLeft = UDim.new(0, 5)
 Juned["_UIPadding3"].PaddingRight = UDim.new(0, 5)
 Juned["_UIPadding3"].Parent = Juned["_Title1"]
-Juned["_Desc1"].Font = Enum.Font.Sarpanch
+Juned["_Desc1"].Font = Enum.Font.RobotoCondensed
 Juned["_Desc1"].Text = "Shows whether the player is close to or far from us with colors highlighted"
 Juned["_Desc1"].TextColor3 = Color3.fromRGB(255, 255, 255)
 Juned["_Desc1"].TextScaled = true
@@ -240,7 +240,7 @@ Juned["_DIoN"].BorderMode = Enum.BorderMode.Inset
 Juned["_DIoN"].Size = UDim2.new(1, -10, 0, 50)
 Juned["_DIoN"].Name = "DIoN"
 Juned["_DIoN"].Parent = Juned["_ScrollingFrame"]
-Juned["_Title2"].Font = Enum.Font.Sarpanch
+Juned["_Title2"].Font = Enum.Font.RobotoCondensed
 Juned["_Title2"].Text = "Distance Instead of Name"
 Juned["_Title2"].TextColor3 = Color3.fromRGB(255, 255, 255)
 Juned["_Title2"].TextSize = 14
@@ -257,7 +257,7 @@ Juned["_Title2"].Parent = Juned["_DIoN"]
 Juned["_UIPadding5"].PaddingLeft = UDim.new(0, 5)
 Juned["_UIPadding5"].PaddingRight = UDim.new(0, 5)
 Juned["_UIPadding5"].Parent = Juned["_Title2"]
-Juned["_Desc2"].Font = Enum.Font.Sarpanch
+Juned["_Desc2"].Font = Enum.Font.RobotoCondensed
 Juned["_Desc2"].Text = "Does not show names, but it shows players distances"
 Juned["_Desc2"].TextColor3 = Color3.fromRGB(255, 255, 255)
 Juned["_Desc2"].TextScaled = true
@@ -417,7 +417,7 @@ local function EGETMVZ_fake_script()
 	local ESPEnabled = false
 	local ESPFolder = Instance.new("Folder")
 	ESPFolder.Name = "ESPFolder"
-	ESPFolder.Parent = game.ReplicatedFirst
+	ESPFolder.Parent = game.CoreGui
 	local CLOSE_DISTANCE = 25
 	local FAR_COLOR = Color3.new(0, 1, 0)
 	local CLOSE_COLOR = Color3.new(1, 0, 0)
@@ -426,17 +426,24 @@ local function EGETMVZ_fake_script()
 		ESPFolder:ClearAllChildren()
 	end
 	local function createESP(player, character)
-		if not ESPEnabled or player == LocalPlayer or not character then return end
-		local hrp = character:WaitForChild("HumanoidRootPart", 5)
-		local humanoid = character:WaitForChild("Humanoid", 5)
-		if not hrp or not humanoid then return end
-		ESPFolder:FindFirstChild(player.Name):Destroy()
-		local billboard = Instance.new("BillboardGui")
-		billboard.Name = player.Name
-		billboard.Adornee = hrp
-		billboard.Size = UDim2.new(0, 200, 0, 20)
-		billboard.AlwaysOnTop = true
-		billboard.Parent = ESPFolder
+		if not ESPEnabled or player == LocalPlayer or not character then
+            return
+        end
+        local hrp = character:WaitForChild("HumanoidRootPart", 5)
+        local humanoid = character:WaitForChild("Humanoid", 5)
+        if not hrp or not humanoid then
+            return
+        end
+        local existing = ESPFolder:FindFirstChild(player.Name)
+        if existing then
+            existing:Destroy()
+        end
+        local billboard = Instance.new("BillboardGui")
+        billboard.Name = player.Name
+        billboard.Adornee = hrp
+        billboard.Size = UDim2.new(0, 200, 0, 20)
+        billboard.AlwaysOnTop = true
+        billboard.Parent = ESPFolder
 		local label = Instance.new("TextLabel")
 		label.Size = UDim2.fromScale(1, 1)
 		label.BackgroundTransparency = 1
@@ -445,13 +452,13 @@ local function EGETMVZ_fake_script()
 		label.TextStrokeTransparency = 0
 		label.Parent = billboard
 		local highlight = Instance.new("Highlight")
-		highlight.Name = "ESPHighlight"
-		highlight.Adornee = character
-		highlight.FillColor = FAR_COLOR
-		highlight.FillTransparency = 0
-		highlight.OutlineTransparency = 1
-		highlight.Enabled = HighlightEnabled.Value
-		highlight.Parent = billboard
+        highlight.Name = "ESPHighlight_" .. player.Name
+        highlight.Adornee = character
+        highlight.FillColor = FAR_COLOR
+        highlight.FillTransparency = 0
+        highlight.OutlineTransparency = 1
+        highlight.Enabled = HighlightEnabled.Value
+        highlight.Parent = ESPFolder -- ✅ instead of billboard/character
 		task.spawn(function()
 			while ESPEnabled and humanoid.Parent and character.Parent do
 				if showDistances.Value and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
@@ -470,7 +477,7 @@ local function EGETMVZ_fake_script()
 						TweenService:Create(highlight, TWEEN_INFO, { FillColor = targetColor }):Play()
 					end
 				end
-				task.wait(0.15)
+				task.wait(0.1)
 			end
 		end)
 	end
@@ -483,22 +490,20 @@ local function EGETMVZ_fake_script()
 			createESP(player, player.Character)
 		end
 	end
-	local function enableESP()
-		if ESPEnabled then return end
-		ESPEnabled = true
+	local function enableESP() print('1') if ESPEnabled then print("2") return end print('middle') ESPEnabled = true
 		for _, player in ipairs(Players:GetPlayers()) do
+            print('3')
 			trackPlayer(player)
+            print('4')
 		end
 		Players.PlayerAdded:Connect(trackPlayer)
+        print("d")
 	end
 	local function disableESP()
 		ESPEnabled = false
 		removeESP()
 	end
-	script.Parent.MouseButton1Click:Connect(function()
-		ESPEnabled = not ESPEnabled
-		if ESPEnabled then enableESP() else disableESP() end
-	end)
+	script.Parent.MouseButton1Click:Connect(function() if ESPEnabled then disableESP() else enableESP() end end)
 end
 local function JWRB_fake_script() 
     local script = Instance.new("LocalScript")
@@ -512,18 +517,19 @@ local function JWRB_fake_script()
         end
         return req(obj)
     end
-	local ena = true
-	local HighlightEnabled = script.Parent.Parent.Parent.Parent.HighlightEnabled
-	local ESPFolder = game.ReplicatedFirst.ESPFolder
-	script.Parent.MouseButton1Click:Connect(function()
-		ena = not ena
-		HighlightEnabled.Value = ena
-		for _, obj in ipairs(ESPFolder:GetChildren()) do
-			if obj:IsA("Highlight") then
-				obj.Enabled = ena
-			end
-		end
-	end)
+    local ena = true
+    local HighlightEnabled = script.Parent.Parent.Parent.Parent.HighlightEnabled
+    local ESPFolder = game.CoreGui:FindFirstChild("ESPFolder")
+
+    script.Parent.MouseButton1Click:Connect(function()
+        ena = not ena
+        HighlightEnabled.Value = ena
+        for _, obj in ipairs(ESPFolder:GetChildren()) do
+            if obj:IsA("Highlight") then
+                obj.Enabled = ena
+            end
+        end
+    end)
 end
 local function UARERS_fake_script() 
     local script = Instance.new("LocalScript")
@@ -564,15 +570,15 @@ local function MMURP_fake_script()
 	local LocalPlayer = Players.LocalPlayer
 	if LocalPlayer then
 		LocalPlayer.Chatted:Connect(function(mes)
-			if mes:lower() == "/e" or "/emote" or "/e open" then
-				script.Parent.Main.Visible = true
-				script.Parent.Main:TweenSize(
-					UDim2.new(0, 250, 0.5, 0),
-					Enum.EasingDirection.InOut,
-					Enum.EasingStyle.Sine,
-					.5
-				)
-			end
+			if mes:lower() == "/e" or mes:lower() == "/emote" or mes:lower() == "/e open" then
+                script.Parent.Main.Visible = true
+                script.Parent.Main:TweenSize(
+                    UDim2.new(0, 250, 0.5, 0),
+                    Enum.EasingDirection.InOut,
+                    Enum.EasingStyle.Sine,
+                    0.5
+                )
+            end
 		end)
 	end
 end
